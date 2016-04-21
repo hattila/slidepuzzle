@@ -1,3 +1,46 @@
 body {
 	background-color: #cccccc;
 }
+
+div#page-container {
+	display: flex;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	width: 100%;
+}
+
+div#page-container div.left-pane {
+	width: calc(100% - 250px);
+}
+div#page-container div.right-pane {
+	width: 250px;
+	height: 100%;
+	background-color: #fff ;
+	box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+div#puzzle-container {
+	width: 800px;
+	margin: auto;
+}
+div#puzzle-container div.space {
+	width: 33%;
+	margin: auto;
+	box-sizing: border-box;
+}
+
+div#puzzle-container div.space div.element {
+	width: 100%;
+	margin: auto;
+	box-sizing: border-box;
+	padding: 5px;
+
+	background-color: #fff ;
+	border-radius: 2px;
+
+}

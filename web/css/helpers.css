@@ -1,0 +1,70 @@
+/**
+ *	Helper classes
+ */
+
+/* alignment */
+.float-left { float: left !important; }
+.float-right { float: right !important; }
+.float-none { float: none !important; }
+.clear-both { clear: both; }
+
+.align-left{text-align: left;}
+.align-center{text-align: center;}
+.align-right{text-align: right;}
+.align-justify{text-align: justify;}
+.margin-auto {margin-left: auto; margin-right: auto;}
+
+
+/* visibility */
+.hidden {visibility: hidden;}
+.visible {visibility: visible;}
+.opacity1 {opacity: 1 !important;}
+.opacity0 {opacity: 0 !important;}
+
+.height0 {height: 0px !important;}
+
+.display-none { display: none !important; }
+.display-block { display: block !important; }
+.display-inline-block { display: inline-block; }
+.display-table { display: table; }
+.display-table-cell { display: table-cell; }
+
+
+/* position */
+.position-relative { position: relative; }
+.position-absolute { position: absolute; }
+.position-fixed { position: fixed; }
+.z-index1{z-index: 1;}
+.z-index2{z-index: 2;}
+.z-index3{z-index: 3;}
+
+
+/* overflow */
+.overflow-hidden { overflow: hidden; }
+.overflow-scroll { overflow: scroll; }
+.overflow-scroll-x { overflow-x: scroll; }
+.overflow-scroll-y { overflow-y: scroll; }
+
+/* widths */
+.width-20 {width: 20% !important;}
+.width-25 {width: 25% !important;}
+.width-30 {width: 30% !important;}
+.width-40 {width: 40% !important;}
+.width-50 {width: 50% !important;}
+.width-60 {width: 60% !important;}
+.width-70 {width: 70% !important;}
+.width-80 {width: 80% !important;}
+.width-90 {width: 90% !important;}
+.width-100{width: 100% !important;}
+
+.font-size-12 {  /*font-size: 12px;*/  font-size: 0.857em;  }
+.font-size-13 {  /*font-size: 13px;*/  font-size: 0.9em;  }
+.font-size-14 {  /*font-size: 14px;*/  font-size: 1em;  }
+
+/* predefined paddings */
+.padding-10 { padding-left: 10px !important; padding-right: 10px!important; }
+.padding-16 { padding-left: 16px !important; padding-right: 16px!important; }
+
+/* other overwrites */
+.margin-top-none { margin-top: 0px!important; }
+.margin-bottom-none { margin-bottom: 0px!important; }
