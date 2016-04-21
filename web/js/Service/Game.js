@@ -56,13 +56,13 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             "left": 0
         };
 
-        if(coords[0] != 0){
+        // if(coords[0] != 0){
             css.top = coords[0] * (100/_gridSize) + '%';
-        }
+        // }
 
-        if(coords[1] != 0){
+        // if(coords[1] != 0){
             css.left = coords[1] * (100/_gridSize) + '%';
-        }
+        // }
 
         $('#'+$(ele).attr('id')).css(css);
 
@@ -75,14 +75,13 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             var coords = $(this).data('coords');
 
             if(_isMovable(coords)){
-
+                _switchElementWithTheHole($(this));
             } else {
 
             }
 
         });
     };
-
 
     var _isMovable = function (coords)
     {
@@ -97,6 +96,20 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         }
 
         return false;
+    };
+
+    var _switchElementWithTheHole = function (ele) {
+        var coords = $(ele).data('coords');
+        var tmp = _holeCoords;
+
+        _holeCoords = coords;
+        $('#hole').data('coords', _holeCoords);
+
+        coords = tmp;
+        $('#'+$(ele).attr('id')).data('coords', coords);
+
+        _placeElement($('#'+$(ele).attr('id')));
+        _placeElement($('#hole'));
 
     };
 
