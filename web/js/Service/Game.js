@@ -9,11 +9,15 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _spacesCount = Math.pow(_gridSize,2);
     var _elementsCount = _spacesCount-1;
 
-    var _elementTemp = '<div id="e{id}" class="element" data-coords="[{i},{j}]"></div>'
+    var _holeCoords = [0, 0];
+
+    var _elementTemp = '<div id="{id}" class="element" data-coords="[{i},{j}]">{content}</div>';
 
     var init = function ()
     {
         _createField();
+
+        _addClickHandlers();
     };
 
     var _createField = function ()
@@ -24,17 +28,22 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         for(var i = 0; i < _gridSize; i++){
             for(var j = 0; j < _gridSize; j++){
-
                 var ele = _elementTemp;
-                ele = ele.replace('{id}',counter.toString());
                 ele = ele.replace('{i}',i.toString());
                 ele = ele.replace('{j}',j.toString());
+                ele = ele.replace('{content}',counter.toString());
+
+                if(counter <= _elementsCount){
+                    ele = ele.replace('{id}','e' + counter.toString());
+                    counter++;
+                }else{ // The Hole
+                    ele = ele.replace('{id}','hole');
+                    _holeCoords = [i, j];
+                }
 
                 $cont.append(ele);
-
                 _placeElement(ele);
 
-                counter++;
             }
         }
     };
@@ -57,11 +66,37 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         $('#'+$(ele).attr('id')).css(css);
 
-        console.log(css);
+        // console.log(css);
     };
 
-    var isMovable = function ()
+    var _addClickHandlers = function ()
     {
+        $('div#puzzle-container').on('click', 'div.element', function(){
+            var coords = $(this).data('coords');
+
+            if(_isMovable(coords)){
+
+            } else {
+
+            }
+
+        });
+    };
+
+
+    var _isMovable = function (coords)
+    {
+        console.log(coords + ' <--> ' + _holeCoords);
+
+        if(coords[0] == _holeCoords[0] && (coords[1] + 1 == _holeCoords[1] || coords[1] - 1 == _holeCoords[1])){
+            return true;
+        }
+
+        if(coords[1] == _holeCoords[1] && (coords[0] + 1 == _holeCoords[0] || coords[0] - 1 == _holeCoords[0])){
+            return true;
+        }
+
+        return false;
 
     };
 
