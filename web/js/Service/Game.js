@@ -11,7 +11,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     var _holeCoords = [0, 0];
 
-    var _elementTemp = '<div id="{id}" class="element" data-coords="[{i},{j}]">{content}</div>';
+    var _elementTemp = '<div id="{id}" class="element" data-coords="[{i},{j}]"><div class="inner"><span>{content}</span></div></div>';
 
     var init = function ()
     {
@@ -31,21 +31,31 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
                 var ele = _elementTemp;
                 ele = ele.replace('{i}',i.toString());
                 ele = ele.replace('{j}',j.toString());
-                ele = ele.replace('{content}',counter.toString());
+
 
                 if(counter <= _elementsCount){
                     ele = ele.replace('{id}','e' + counter.toString());
+                    ele = ele.replace('{content}',counter.toString());
                     counter++;
                 }else{ // The Hole
                     ele = ele.replace('{id}','hole');
+                    ele = ele.replace('{content}','');
                     _holeCoords = [i, j];
                 }
 
                 $cont.append(ele);
                 _placeElement(ele);
-
+                _setElementSizes(ele);
             }
         }
+    };
+
+    var _setElementSizes = function(ele)
+    {
+        $('#'+$(ele).attr('id')).css({
+            "width" : (100 / _gridSize) + '%',
+            "height" : (100 / _gridSize) + '%'
+        });
     };
 
     var _placeElement = function (ele)
@@ -56,13 +66,13 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             "left": 0
         };
 
-        // if(coords[0] != 0){
+        if(coords[0] != 0){
             css.top = coords[0] * (100/_gridSize) + '%';
-        // }
+        }
 
-        // if(coords[1] != 0){
+        if(coords[1] != 0){
             css.left = coords[1] * (100/_gridSize) + '%';
-        // }
+        }
 
         $('#'+$(ele).attr('id')).css(css);
 
@@ -85,7 +95,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     var _isMovable = function (coords)
     {
-        console.log(coords + ' <--> ' + _holeCoords);
+        // console.log(coords + ' <--> ' + _holeCoords);
 
         if(coords[0] == _holeCoords[0] && (coords[1] + 1 == _holeCoords[1] || coords[1] - 1 == _holeCoords[1])){
             return true;
