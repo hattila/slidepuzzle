@@ -55,7 +55,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         $('#'+$(ele).attr('id')).css({
             "width" : (100 / _gridSize) + '%',
             "height" : (100 / _gridSize) + '%',
-            "background-position" : (coords[1] * 100/_gridSize) + '% ' + (coords[0] * 100/_gridSize) + '% '
+            "background-position" : (coords[1] * 100/(_gridSize-1)) + '% ' + (coords[0] * 100/(_gridSize-1)) + '% '
         });
     };
 
