@@ -45,16 +45,17 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
                 $cont.append(ele);
                 _placeElement(ele);
-                _setElementSizes(ele);
+                _setElementSizes(ele, [i,j]);
             }
         }
     };
 
-    var _setElementSizes = function(ele)
+    var _setElementSizes = function(ele, coords)
     {
         $('#'+$(ele).attr('id')).css({
             "width" : (100 / _gridSize) + '%',
-            "height" : (100 / _gridSize) + '%'
+            "height" : (100 / _gridSize) + '%',
+            "background-position" : (coords[1] * 100/_gridSize) + '% ' + (coords[0] * 100/_gridSize) + '% '
         });
     };
 

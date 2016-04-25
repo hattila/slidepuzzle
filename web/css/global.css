@@ -61,6 +61,9 @@ div#puzzle-container div.element {
 	font-size: 40px;
 	color: #aaa;
 	cursor: pointer;
+
+	background-image: url('../image/forest-patrol-flat-1700.png');
+	background-size: 850px 400px;
 }
 div#puzzle-container div.element.hole {}
 
@@ -78,6 +81,7 @@ div#puzzle-container div.element div.inner span {
 
 div#puzzle-container div#hole {
 	background-color: rgba(0,0,0,0.0);
+	background-image: none	;
 	box-shadow: none;
 	border: none;
 	cursor: initial;
