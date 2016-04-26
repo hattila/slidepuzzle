@@ -15,6 +15,12 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     var _elementMap = [];
 
+    // var _lastMovedElementInScramble = null;
+    var _lastMovedElementInScramble = {
+        id : 'asdasdasd',
+        coords : [1,2]
+    };
+
     var init = function ()
     {
         _createField();
@@ -26,16 +32,16 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         //     scramble();
         // }
 
-        var tc = 0;
-        var t = setInterval(function(){
-            scramble();
-            tc++;
-
-            if(tc == 10){
-                clearInterval(t);
-            }
-
-        },200);
+        // var tc = 0;
+        // var t = setInterval(function(){
+        //     scramble();
+        //     tc++;
+        //
+        //     if(tc == 100){
+        //         clearInterval(t);
+        //     }
+        //
+        // },100);
 
     };
 
@@ -150,9 +156,9 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         _placeElement($('#hole'));
 
         if(_refreshElementMapElementById($(ele).attr('id'), coords)){
-            console.log('refresh completed');
+            // console.log('refresh completed');
         }else{
-            console.log('refresh failed');
+            // console.log('refresh failed');
         }
 
     };
@@ -174,17 +180,27 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
          */
         var adjacentCoords = [];
 
+        console.log(_lastMovedElementInScramble);
+
         if(x > 0){
-            adjacentCoords.push([x-1,y]); // up
+            // adjacentCoords.push([x-1,y]); // up
+
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x-1,y]);
         }
         if(y > 0){
-            adjacentCoords.push([x,y-1]); // left
+            // adjacentCoords.push([x,y-1]); // left
+
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x,y-1]);
         }
         if(y < _gridSize-1) {
-            adjacentCoords.push([x, y + 1]); // right
+            // adjacentCoords.push([x, y + 1]); // right
+
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x,y+1]);
         }
         if(x < _gridSize-1){
-            adjacentCoords.push([x+1,y]); // bottom
+            // adjacentCoords.push([x+1,y]); // bottom
+
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x+1,y]);
         }
 
         var idx = Math.floor(Math.random() * adjacentCoords.length);
@@ -194,18 +210,34 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         // var winner = $('#puzzle-container div.element[data-coords="['+ adjacentCoords[idx][0]+ ','+adjacentCoords[idx][1]+']"]');
 
         var id = _getElementIdFromMapByCoords(adjacentCoords[idx]);
-        console.log(id);
+        // console.log(id);
         var winner = $('#' + id );
 
-        console.log(winner.children('div').children('span').text());
+        _lastMovedElementInScramble.id = id;
+        _lastMovedElementInScramble.coords = adjacentCoords[idx];
+
+        // console.log(winner.children('div').children('span').text());
 
         _switchElementWithTheHole(winner);
+    };
+
+    var _pushCoordsIfItsNotTheLastScrambled = function(pushTo, pushThis) {
+
+        // console.log(_lastMovedElementInScramble);
+
+        if( _lastMovedElementInScramble !== null &&
+            pushThis[0] == _lastMovedElementInScramble.coords[0] &&
+            pushThis[1] == _lastMovedElementInScramble.coords[1]){
+
+        }else{
+            pushTo.push(pushThis);
+        }
     };
 
     var _getElementIdFromMapByCoords = function(coords) {
         for(var i = 0; i < _elementMap.length; i++){
 
-            console.log(_elementMap[i].coords[0] + ' - ' + _elementMap[i].coords[1]);
+            // console.log(_elementMap[i].coords[0] + ' - ' + _elementMap[i].coords[1]);
 
             if(_elementMap[i].coords[0] == coords[0] && _elementMap[i].coords[1] == coords[1]){
                 return _elementMap[i].id;
@@ -216,7 +248,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     var _refreshElementMapElementById = function(id, coords) {
 
-        console.log('refreshing id: ' + id + ', with coords: ' + coords);
+        // console.log('refreshing id: ' + id + ', with coords: ' + coords);
 
         for(var i = 0; i < _elementMap.length; i++){
             if(_elementMap[i].id == id){
@@ -230,10 +262,14 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var getElementMap = function() {
         console.log(_elementMap);
     };
+    var getLastMoved = function() {
+        console.log(_lastMovedElementInScramble);
+    };
 
     return {
         init: init,
         scramble: scramble,
-        getElementMap: getElementMap
+        getElementMap: getElementMap,
+        getLastMoved: getLastMoved
     }
 })();
