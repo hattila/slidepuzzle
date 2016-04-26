@@ -24,11 +24,18 @@ div#page-container div.right-pane {
 }
 
 
+div.puzzle-outer {
+	width: 800px;
+	height: 450px;
+	padding: 0px;
+	box-sizing: content-box;
+	margin: 200px auto 0 auto;
+}
 div#puzzle-container {
 	width: 800px;
 	height: 450px;
 	margin: 200px auto 0 auto;
-	padding: 5px;
+	padding: 0px;
 	background-color: #bbb;
 	border-radius: 2px;
 	box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
