@@ -43,6 +43,10 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         //
         // },100);
 
+        $('#scramble').click(function(){
+            scramble();
+        });
+
     };
 
     var _createField = function ()
