@@ -71,6 +71,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
                     ele = ele.replace('{id}','t' + counter.toString());
                     ele = ele.replace('{content}',counter.toString());
                     // ele = ele.replace('{content}','['+i+','+j+']');
+                    // ele = ele.replace('{content}', counter.toString() + '. ['+i+','+j+']');
                     counter++;
                 }else{ // The Hole
                     ele = ele.replace('{id}','hole');
@@ -79,12 +80,20 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
                 }
 
                 $cont.append(ele);
-                _placeTile(ele);
+                _setTilePosition(ele);
                 _setTileSizes(ele, [i,j]);
             }
         }
     };
 
+    /**
+     * Preset a Tile:
+     * Set the background position, and size.
+     *
+     * @param ele div.tile
+     * @param coords array of coords
+     * @private
+     */
     var _setTileSizes = function(ele, coords)
     {
         var id = $(ele).attr('id');
@@ -101,7 +110,14 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         });
     };
 
-    var _placeTile = function (ele)
+    /**
+     * Set the position of a Tile
+     * Used to move the Tiles (css transition of position)
+     *
+     * @param ele div.tile
+     * @private
+     */
+    var _setTilePosition = function (ele)
     {
         var coords = $(ele).data('coords');
         var css = {
@@ -161,8 +177,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         coords = tmp;
         $('#'+$(ele).attr('id')).data('coords', coords);
 
-        _placeTile($('#'+$(ele).attr('id')));
-        _placeTile($('#hole'));
+        _setTilePosition($('#'+$(ele).attr('id')));
+        _setTilePosition($('#hole'));
 
         if(_refreshTileMapElementById($(ele).attr('id'), coords)){
             // console.log('refresh completed');
@@ -189,7 +205,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
          */
         var adjacentCoords = [];
 
-        console.log(_lastMovedTileInScramble);
+        // console.log(_lastMovedTileInScramble);
+        // console.log('['+_lastMovedTileInScramble.coords[0]+','+_lastMovedTileInScramble.coords[1]+']');
 
         if(x > 0){
             // adjacentCoords.push([x-1,y]); // up
@@ -221,7 +238,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         var winner = $('#' + id );
 
         _lastMovedTileInScramble.id = id;
-        _lastMovedTileInScramble.coords = adjacentCoords[idx];
+        // _lastMovedTileInScramble.coords = adjacentCoords[idx];
+        _lastMovedTileInScramble.coords = _holeCoords;
 
         // console.log(winner.children('div').children('span').text());
 
@@ -236,7 +254,12 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             pushThis[0] == _lastMovedTileInScramble.coords[0] &&
             pushThis[1] == _lastMovedTileInScramble.coords[1]){
 
+            console.log('this should not be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
+
         }else{
+
+            console.log('this will be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
+
             pushTo.push(pushThis);
         }
     };
