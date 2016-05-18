@@ -29,18 +29,29 @@ div#page-container div.right-pane h1.main-title{
 }
 
 
+div.moves-counter-outer {
+	margin: 100px 0 0 0;
+	text-align: center;
+}
+div.moves-counter-outer p {
+	font-size: 60px;
+	color: #777;
+}
+div.moves-counter-outer p span#moves-counter {}
+
+
 div.puzzle-outer {
 	width: 100%;
 	max-width: 800px;
 	height: 450px;
 	padding: 0px;
 	box-sizing: content-box;
-	margin: 200px auto 0 auto;
+	margin: 50px auto 0 auto;
 }
 div#puzzle-container {
 	width: inherit;
 	height: inherit;
-	margin: 200px auto 0 auto;
+	margin: 0px auto 0 auto;
 	padding: 0px;
 	background-color: #bbb;
 	border-radius: 2px;

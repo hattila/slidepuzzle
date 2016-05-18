@@ -14,6 +14,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _tileTemp = '<div id="{id}" class="tile" data-coords="[{i},{j}]"><div class="inner"><span>{content}</span></div></div>';
 
     var _tileMap = [];
+        
+    var _moves = 0;
 
     // var _lastMovedTileInScramble = null;
     var _lastMovedTileInScramble = {
@@ -129,11 +131,16 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
             if(_isMovable(coords)){
                 _switchTileWithTheHole($(this));
+                _incMoves();
             } else {
 
             }
 
         });
+    };
+        
+    var _incMoves = function () {
+        _moves++;  
     };
 
     var _isMovable = function (coords)
