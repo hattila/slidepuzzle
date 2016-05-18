@@ -14,8 +14,10 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _tileTemp = '<div id="{id}" class="tile" data-coords="[{i},{j}]"><div class="inner"><span>{content}</span></div></div>';
 
     var _tileMap = [];
-        
-    var _moves = 0;
+
+
+    var _SCRAMBLE_COUNT = 100;
+    var _SCRAMBLE_INTERVAL = 25; // speed of movement in ms, lower is faster
 
     // var _lastMovedTileInScramble = null;
     var _lastMovedTileInScramble = {
@@ -133,7 +135,6 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
             if(_isMovable(coords)){
                 _switchTileWithTheHole($(this));
-                _incMoves();
             } else {
 
             }
@@ -141,9 +142,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         });
     };
         
-    var _incMoves = function () {
-        _moves++;  
-    };
+
 
     var _isMovable = function (coords)
     {
@@ -172,6 +171,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         _setTilePosition($('#'+$(ele).attr('id')));
         _setTilePosition($('#hole'));
+
+        $.publish('/tile/moves');
 
         if(_refreshTileMapElementById($(ele).attr('id'), coords)){
             // console.log('refresh completed');
@@ -233,24 +234,17 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     };
 
     var scramble = function () {
-
-
-        // for(var i = 0; i < 10; i++){
-        //     scramble();
-        // }
-
         $('.tile').css({'transition': 'left 0.1s, top 0.1s'});
-
 
         var tc = 0;
         var t = setInterval(function(){
             _switchTileWithTheHole(_getRandomMovableTile());
             tc++;
-            if(tc == 100){
+            if(tc == _SCRAMBLE_COUNT){
                 clearInterval(t);
                 $('.tile').css({'transition': 'left 0.2s, top 0.2s'});
             }
-        },25);
+        },_SCRAMBLE_INTERVAL);
 
     };
 
