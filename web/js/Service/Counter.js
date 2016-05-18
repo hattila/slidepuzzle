@@ -28,8 +28,14 @@ Hw.Srvc.Counter = Hw.Srvc.Counter || (function(){
     var _refreshCounter = function () {
         $('#moves-counter').html(_counter);
     };
+        
+    var resetCounter = function () {
+        _setCounter(0); 
+    };
 
     return {
-        init: init
+        init: init,
+        resetCounter: resetCounter
+        
     }
 })();

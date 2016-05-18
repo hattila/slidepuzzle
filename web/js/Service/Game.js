@@ -243,6 +243,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             if(tc == _SCRAMBLE_COUNT){
                 clearInterval(t);
                 $('.tile').css({'transition': 'left 0.2s, top 0.2s'});
+                Hw.Srvc.Counter.resetCounter();
             }
         },_SCRAMBLE_INTERVAL);
 
