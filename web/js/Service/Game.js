@@ -7,16 +7,16 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _gridSize = 3;
 
     var _spacesCount = Math.pow(_gridSize,2);
-    var _elementsCount = _spacesCount-1;
+    var _tilesCount = _spacesCount-1;
 
     var _holeCoords = [0, 0];
 
-    var _elementTemp = '<div id="{id}" class="element" data-coords="[{i},{j}]"><div class="inner"><span>{content}</span></div></div>';
+    var _tileTemp = '<div id="{id}" class="tile" data-coords="[{i},{j}]"><div class="inner"><span>{content}</span></div></div>';
 
-    var _elementMap = [];
+    var _tileMap = [];
 
-    // var _lastMovedElementInScramble = null;
-    var _lastMovedElementInScramble = {
+    // var _lastMovedTileInScramble = null;
+    var _lastMovedTileInScramble = {
         id : 'asdasdasd',
         coords : [1,2]
     };
@@ -25,7 +25,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     {
         _createField();
 
-        _addClickHandlers();
+        _addClickHandlersToTiles();
 
 
         // for(var i = 0; i < 10; i++){
@@ -49,6 +49,11 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     };
 
+    /**
+     * place every tile on it's initial location
+     *
+     * @private
+     */
     var _createField = function ()
     {
         var $cont = $('#puzzle-container');
@@ -57,15 +62,15 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         for(var i = 0; i < _gridSize; i++){
             for(var j = 0; j < _gridSize; j++){
-                var ele = _elementTemp;
+                var ele = _tileTemp;
                 ele = ele.replace('{i}',i.toString());
                 ele = ele.replace('{j}',j.toString());
 
 
-                if(counter <= _elementsCount){
-                    ele = ele.replace('{id}','e' + counter.toString());
-                    // ele = ele.replace('{content}',counter.toString());
-                    ele = ele.replace('{content}','['+i+','+j+']');
+                if(counter <= _tilesCount){
+                    ele = ele.replace('{id}','t' + counter.toString());
+                    ele = ele.replace('{content}',counter.toString());
+                    // ele = ele.replace('{content}','['+i+','+j+']');
                     counter++;
                 }else{ // The Hole
                     ele = ele.replace('{id}','hole');
@@ -74,13 +79,13 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
                 }
 
                 $cont.append(ele);
-                _placeElement(ele);
-                _setElementSizes(ele, [i,j]);
+                _placeTile(ele);
+                _setTileSizes(ele, [i,j]);
             }
         }
     };
 
-    var _setElementSizes = function(ele, coords)
+    var _setTileSizes = function(ele, coords)
     {
         var id = $(ele).attr('id');
 
@@ -90,13 +95,13 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             "background-position" : (coords[1] * 100/(_gridSize-1)) + '% ' + (coords[0] * 100/(_gridSize-1)) + '% '
         });
 
-        _elementMap.push({
+        _tileMap.push({
             id : id,
             coords : coords
         });
     };
 
-    var _placeElement = function (ele)
+    var _placeTile = function (ele)
     {
         var coords = $(ele).data('coords');
         var css = {
@@ -117,13 +122,13 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         // console.log(css);
     };
 
-    var _addClickHandlers = function ()
+    var _addClickHandlersToTiles = function ()
     {
-        $('div#puzzle-container').on('click', 'div.element', function(){
+        $('div#puzzle-container').on('click', 'div.tile', function(){
             var coords = $(this).data('coords');
 
             if(_isMovable(coords)){
-                _switchElementWithTheHole($(this));
+                _switchTileWithTheHole($(this));
             } else {
 
             }
@@ -146,7 +151,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         return false;
     };
 
-    var _switchElementWithTheHole = function (ele) {
+    var _switchTileWithTheHole = function (ele) {
         var coords = $(ele).data('coords');
         var tmp = _holeCoords;
 
@@ -156,10 +161,10 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         coords = tmp;
         $('#'+$(ele).attr('id')).data('coords', coords);
 
-        _placeElement($('#'+$(ele).attr('id')));
-        _placeElement($('#hole'));
+        _placeTile($('#'+$(ele).attr('id')));
+        _placeTile($('#hole'));
 
-        if(_refreshElementMapElementById($(ele).attr('id'), coords)){
+        if(_refreshTileMapElementById($(ele).attr('id'), coords)){
             // console.log('refresh completed');
         }else{
             // console.log('refresh failed');
@@ -180,11 +185,11 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         // console.log(rndX);
 
         /**
-         * find elements adjecent to the hole RND
+         * find tiles adjecent to the hole RND
          */
         var adjacentCoords = [];
 
-        console.log(_lastMovedElementInScramble);
+        console.log(_lastMovedTileInScramble);
 
         if(x > 0){
             // adjacentCoords.push([x-1,y]); // up
@@ -211,69 +216,67 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         console.log(adjacentCoords, adjacentCoords[idx]);
 
-        // var winner = $('#puzzle-container div.element[data-coords="['+ adjacentCoords[idx][0]+ ','+adjacentCoords[idx][1]+']"]');
-
-        var id = _getElementIdFromMapByCoords(adjacentCoords[idx]);
+        var id = _getTileIdFromMapByCoords(adjacentCoords[idx]);
         // console.log(id);
         var winner = $('#' + id );
 
-        _lastMovedElementInScramble.id = id;
-        _lastMovedElementInScramble.coords = adjacentCoords[idx];
+        _lastMovedTileInScramble.id = id;
+        _lastMovedTileInScramble.coords = adjacentCoords[idx];
 
         // console.log(winner.children('div').children('span').text());
 
-        _switchElementWithTheHole(winner);
+        _switchTileWithTheHole(winner);
     };
 
     var _pushCoordsIfItsNotTheLastScrambled = function(pushTo, pushThis) {
 
-        // console.log(_lastMovedElementInScramble);
+        // console.log(_lastMovedTileInScramble);
 
-        if( _lastMovedElementInScramble !== null &&
-            pushThis[0] == _lastMovedElementInScramble.coords[0] &&
-            pushThis[1] == _lastMovedElementInScramble.coords[1]){
+        if( _lastMovedTileInScramble !== null &&
+            pushThis[0] == _lastMovedTileInScramble.coords[0] &&
+            pushThis[1] == _lastMovedTileInScramble.coords[1]){
 
         }else{
             pushTo.push(pushThis);
         }
     };
 
-    var _getElementIdFromMapByCoords = function(coords) {
-        for(var i = 0; i < _elementMap.length; i++){
+    var _getTileIdFromMapByCoords = function(coords) {
+        for(var i = 0; i < _tileMap.length; i++){
 
-            // console.log(_elementMap[i].coords[0] + ' - ' + _elementMap[i].coords[1]);
+            // console.log(_tileMap[i].coords[0] + ' - ' + _tileMap[i].coords[1]);
 
-            if(_elementMap[i].coords[0] == coords[0] && _elementMap[i].coords[1] == coords[1]){
-                return _elementMap[i].id;
+            if(_tileMap[i].coords[0] == coords[0] && _tileMap[i].coords[1] == coords[1]){
+                return _tileMap[i].id;
             }
         }
         return false;
     };
 
-    var _refreshElementMapElementById = function(id, coords) {
+    var _refreshTileMapElementById = function(id, coords) {
 
         // console.log('refreshing id: ' + id + ', with coords: ' + coords);
 
-        for(var i = 0; i < _elementMap.length; i++){
-            if(_elementMap[i].id == id){
-                _elementMap[i].coords = coords;
+        for(var i = 0; i < _tileMap.length; i++){
+            if(_tileMap[i].id == id){
+                _tileMap[i].coords = coords;
                 return true;
             }
         }
         return false;
     };
 
-    var getElementMap = function() {
-        console.log(_elementMap);
+    var getTileMap = function() {
+        console.log(_tileMap);
     };
     var getLastMoved = function() {
-        console.log(_lastMovedElementInScramble);
+        console.log(_lastMovedTileInScramble);
     };
 
     return {
         init: init,
         scramble: scramble,
-        getElementMap: getElementMap,
+        getTileMap: getTileMap,
         getLastMoved: getLastMoved
     }
 })();

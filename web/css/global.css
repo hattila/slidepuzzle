@@ -50,7 +50,7 @@ div#puzzle-container div.space {
 	padding: 5px;
 }
 
-div#puzzle-container div.element {
+div#puzzle-container div.tile {
 	position: absolute;
 	/*width: 100%;*/
 	width: 33.33333%; /* just defaults */
@@ -72,14 +72,14 @@ div#puzzle-container div.element {
 	background-image: url('../image/forest-patrol-flat-1600.png');
 	background-size: 800px 450px;
 }
-div#puzzle-container div.element.hole {}
+div#puzzle-container div.tile.hole {}
 
-div#puzzle-container div.element div.inner {
+div#puzzle-container div.tile div.inner {
 	display: table;
 	width: 100%;
 	height: 100%;
 }
-div#puzzle-container div.element div.inner span {
+div#puzzle-container div.tile div.inner span {
 	display: table-cell	;
 	height: auto;
 	width: 100%;
