@@ -4,19 +4,62 @@
 	<meta charset="UTF-8">
 
 	<!-- CSS  -->
-	<!--<link href="/css/materialize.min.css" rel="stylesheet" type="text/css" media="screen,projection">-->
+	<link href="/css/libs/materialize.min.css" rel="stylesheet" type="text/css" media="screen,projection">
+	<link href="/css/reset.css" rel="stylesheet" type="text/css" media="screen,projection">
+	<link href="/css/helpers.css" rel="stylesheet" type="text/css" media="screen,projection">
 	<link href="/css/global.css" rel="stylesheet" type="text/css" media="screen,projection">
 
 	<title>Slide Puzzle</title>
 </head>
 <body>
 
-Yo
+<div id="page-container">
+	<div class="left-pane float-left">
+
+		<div class="moves-counter-outer">
+			<p>
+				Moves: <span id="moves-counter">0</span>
+			</p>
+		</div>
+
+		<div class="puzzle-outer">
+			<div id="puzzle-container">
+
+				<!--<div class="space float-left"></div>-->
+
+			</div>
+		</div>
+
+	</div>
+	<div class="right-pane float-left">
+
+		<div class="row">
+			<div class="col s12">
+				<h1 class="main-title">
+					Slide Puzzle master pro
+				</h1>
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col s12">
+				<a href="#" id="scramble" class="btn orange white-text waves-effect display-block">Shuffle / Reset</a>
+			</div>
+		</div>
+	</div>
+
+
+</div>
 
 
 
 	<script src="/js/jquery-2.2.2.min.js" type="text/javascript"></script>
-	<script src="/js/materialize.min.js" type="text/javascript"></script>
-	<script src="/js/AppController.js" type="text/javascript"></script>
+	<script src="/js/libs/materialize.min.js" type="text/javascript"></script>
+	<script src="/js/utils.js" type="text/javascript"></script>
+	<script src="/js/namespace.js" type="text/javascript"></script>
+	<script src="/js/Controller/AppController.js" type="text/javascript"></script>
+	<script src="/js/Service/Game.js" type="text/javascript"></script>
+	<script src="/js/Service/Counter.js" type="text/javascript"></script>
 </body>
 </html>
