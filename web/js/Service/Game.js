@@ -27,22 +27,6 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         _addClickHandlersToTiles();
 
-
-        // for(var i = 0; i < 10; i++){
-        //     scramble();
-        // }
-
-        // var tc = 0;
-        // var t = setInterval(function(){
-        //     scramble();
-        //     tc++;
-        //
-        //     if(tc == 100){
-        //         clearInterval(t);
-        //     }
-        //
-        // },100);
-
         $('#scramble').click(function(){
             scramble();
         });
@@ -188,17 +172,9 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     };
 
-    var scramble = function() {
-        // switch with hole
-        // repeat N times
-
+    var _getRandomMovableTile = function() {
         var x = _holeCoords[0];
         var y = _holeCoords[1];
-
-        // var minX = (x > 1) ? x-1 : 0;
-        // var maxX = (x < _gridSize-1) ? x+1 : _gridSize-1;
-        // var rndX = Math.floor(Math.random() * (maxX) ) + minX;
-        // console.log(rndX);
 
         /**
          * find tiles adjecent to the hole RND
@@ -231,7 +207,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         var idx = Math.floor(Math.random() * adjacentCoords.length);
 
-        console.log(adjacentCoords, adjacentCoords[idx]);
+        // console.log(adjacentCoords, adjacentCoords[idx]);
 
         var id = _getTileIdFromMapByCoords(adjacentCoords[idx]);
         // console.log(id);
@@ -242,8 +218,31 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         _lastMovedTileInScramble.coords = _holeCoords;
 
         // console.log(winner.children('div').children('span').text());
+        // _switchTileWithTheHole(winner);
 
-        _switchTileWithTheHole(winner);
+        return winner;
+    };
+
+    var scramble = function () {
+
+
+        // for(var i = 0; i < 10; i++){
+        //     scramble();
+        // }
+
+        $('.tile').css({'transition': 'left 0.1s, top 0.1s'});
+
+
+        var tc = 0;
+        var t = setInterval(function(){
+            _switchTileWithTheHole(_getRandomMovableTile());
+            tc++;
+            if(tc == 100){
+                clearInterval(t);
+                $('.tile').css({'transition': 'left 0.2s, top 0.2s'});
+            }
+        },25);
+
     };
 
     var _pushCoordsIfItsNotTheLastScrambled = function(pushTo, pushThis) {
@@ -254,11 +253,11 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             pushThis[0] == _lastMovedTileInScramble.coords[0] &&
             pushThis[1] == _lastMovedTileInScramble.coords[1]){
 
-            console.log('this should not be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
+            // console.log('this should not be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
 
         }else{
 
-            console.log('this will be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
+            // console.log('this will be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
 
             pushTo.push(pushThis);
         }
