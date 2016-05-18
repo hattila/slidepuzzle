@@ -17,23 +17,29 @@ div#page-container div.left-pane {
 	width: calc(100% - 250px);
 }
 div#page-container div.right-pane {
+	padding: 16px 0 0 0;
 	width: 250px;
 	height: 100%;
 	background-color: #fff ;
 	box-shadow: -2px 0px 4px rgba(0, 0, 0, 0.3);
 }
+div#page-container div.right-pane h1.main-title{
+	font-size: 28px;
+	text-align: center;
+}
 
 
 div.puzzle-outer {
-	width: 800px;
+	width: 100%;
+	max-width: 800px;
 	height: 450px;
 	padding: 0px;
 	box-sizing: content-box;
 	margin: 200px auto 0 auto;
 }
 div#puzzle-container {
-	width: 800px;
-	height: 450px;
+	width: inherit;
+	height: inherit;
 	margin: 200px auto 0 auto;
 	padding: 0px;
 	background-color: #bbb;
