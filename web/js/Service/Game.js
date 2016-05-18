@@ -74,7 +74,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     /**
      * Preset a Tile:
-     * Set the background position, and size.
+     * - set the background position
+     * - set size.
      *
      * @param ele div.tile
      * @param coords array of coords
@@ -87,7 +88,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         $('#'+id).css({
             "width" : (100 / _gridSize) + '%',
             "height" : (100 / _gridSize) + '%',
-            "background-position" : (coords[1] * 100/(_gridSize-1)) + '% ' + (coords[0] * 100/(_gridSize-1)) + '% '
+            "background-position" : (coords[1] * 100/(_gridSize-1)) + '% ' + (coords[0] * 100/(_gridSize-1)) + '% ',
+            "font-size" : (1 + (10 / _gridSize))+'em'
         });
 
         _tileMap.push({
