@@ -285,6 +285,15 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         console.log(_lastHoleCoordsInScramble);
     };
 
+
+        /**
+         * Win conditions
+         * - every tile in the correct place?
+         * 
+         * 
+         * 
+         */
+
     return {
         init: init,
         scramble: scramble,
