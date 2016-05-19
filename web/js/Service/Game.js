@@ -38,6 +38,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
                 if(_checkIfPuzzleIsComplete()){
                     console.log('WIN');
+                }else{
+                    console.log('Not completed yet');
                 }
 
             }else{
@@ -192,18 +194,17 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         _setTilePosition($('#'+$(ele).attr('id')));
         _setTilePosition($('#hole'));
 
-        if(!movedByScrambling){
-            $.publish('/tile/moves', ele);
-        }
-
         if(_refreshTileMapElementById($(ele).attr('id'), coords)){
             // console.log('refresh completed');
         }else{
             // console.log('refresh failed');
         }
 
-        // _checkIfTileIsInTheCorrectPlace(ele);
+        if(!movedByScrambling){
+            $.publish('/tile/moves', ele);
+        }
 
+        // _checkIfTileIsInTheCorrectPlace(ele);
     };
 
 
@@ -366,7 +367,29 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     };
 
     var _checkIfPuzzleIsComplete = function () {
-        return isEquivalent(_sampleTileMap, _tileMap);
+
+        if(_sampleTileMap.length != _tileMap.length){
+            throw new Error('sample and tile map is not the same length');
+        }
+
+        for(var i = 0; i < _sampleTileMap.length; i++){
+            if( _sampleTileMap[i].id == _tileMap[i].id &&
+                _sampleTileMap[i].coords[0] == _tileMap[i].coords[0] &&
+                _sampleTileMap[i].coords[1] == _tileMap[i].coords[1]
+            ){
+                // it's all right
+            }else{
+
+                console.log('First difference here: '+_sampleTileMap[i].id+' - '+_tileMap[i].id);
+                console.log('Sample : '+_sampleTileMap[i].coords[0]+' '+_sampleTileMap[i].coords[1]);
+                console.log('Tile : '+_tileMap[i].coords[0]+' '+_tileMap[i].coords[1]);
+
+                return false;
+            }
+
+        }
+
+        return true;
     };
 
 
