@@ -32,6 +32,19 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             scramble();
         });
 
+        $.subscribe('/tile/moves', function(e, ele){
+            if(_checkIfTileIsInTheCorrectPlace(ele)){
+                console.log('It\s in the correct place');
+
+                if(_checkIfPuzzleIsComplete()){
+                    console.log('WIN');
+                }
+
+            }else{
+                console.log('It\s not in the correct place');
+            }
+        });
+
     };
 
     /**
@@ -70,8 +83,13 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             }
         }
 
-        _sampleTileMap = _tileMap;
-
+        /**
+         * There is no Clone?
+         *
+         * http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
+         */
+        // _sampleTileMap = _tileMap;
+        _sampleTileMap = JSON.parse(JSON.stringify(_tileMap));
     };
 
     /**
@@ -184,7 +202,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             // console.log('refresh failed');
         }
 
-        _checkIfTileIsInTheCorrectPlace(ele)
+        // _checkIfTileIsInTheCorrectPlace(ele);
 
     };
 
@@ -289,7 +307,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     };
 
     var getTileMap = function() {
-        console.log(_tileMap);
+        console.log(_tileMap, _sampleTileMap);
     };
     var getLastMoved = function() {
         console.log(_lastHoleCoordsInScramble);
@@ -303,6 +321,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
      * A, tile map is exactly the same as in the beginning.
      *  - check after every move? player move.
      *  - Don't check when scrambling
+     *  - We can check the whole field only when the current tile is in the correct place!
      *
      * B, Calculate the completed image by the coords and placement of the tiles?
      *  - dafuq
@@ -313,6 +332,41 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
      */
     var _checkIfTileIsInTheCorrectPlace = function (ele) {
 
+
+        var id = $(ele).attr('id');
+        var coords = $(ele).data('coords');
+
+        // console.log('id: '+id+' ['+coords[0]+','+coords[1]+']');
+
+        /**
+         * Break, and continue in vanilla JS forEach?
+         */
+        // _sampleTileMap.forEach(function (e) {
+        //
+        //     if(e.id != id){
+        //         return;
+        //     }
+        //
+        //     if(e.coords[0] == coords[0] && e.coords[1] == coords[1]){}
+        // });
+
+        for(var i = 0; i < _sampleTileMap.length; i++){
+            if(_sampleTileMap[i].id != id){
+                continue;
+            }
+
+            // console.log('id: '+_sampleTileMap[i].id+' ['+_sampleTileMap[i].coords[0]+','+_sampleTileMap[i].coords[0]+']');
+
+            if(_sampleTileMap[i].coords[0] == coords[0] && _sampleTileMap[i].coords[1] == coords[1]){
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    var _checkIfPuzzleIsComplete = function () {
+        return isEquivalent(_sampleTileMap, _tileMap);
     };
 
 
