@@ -28,6 +28,37 @@ div#page-container div.right-pane h1.main-title{
 	font-size: 28px;
 	text-align: center;
 }
+div#page-container div.right-pane h2.sub-title{
+	font-size: 20px;
+	text-align: left;
+	margin: 12px 0 12px 0;
+}
+
+div#page-container div.right-pane div.row.border-top {
+	border-top: 1px solid #ddd;
+}
+
+div#available-bgs {
+	margin: 0 -3px 0 -3px;
+}
+div#available-bgs div.bg {
+	width: 107px;
+	height: 60px;
+	margin: 0 3px 6px 3px;
+	line-height: 0;
+	opacity: 1;
+
+	transition: opacity 0.2s;
+}
+div#available-bgs div.bg img {
+	width: 100%;
+	height: 100%;
+}
+
+div#available-bgs div.bg:hover {
+	cursor: pointer;
+	opacity: 0.8;
+}
 
 
 div.moves-counter-outer {
@@ -88,6 +119,7 @@ div#puzzle-container div.tile {
 	color: rgba(50, 50, 50, 0.6);
 	cursor: pointer;
 	background-image: url('../image/forest-patrol-flat-1600.png');
+	/*background-image: url('../image/doom_logo_1600.jpg');*/
 	background-size: 800px 450px;
 }
 div#puzzle-container div.tile.hole {}
