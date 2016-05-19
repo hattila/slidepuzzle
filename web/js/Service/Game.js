@@ -19,11 +19,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _SCRAMBLE_COUNT = 100;
     var _SCRAMBLE_INTERVAL = 25; // speed of movement in ms, lower is faster
 
-    // var _lastMovedTileInScramble = null;
-    var _lastMovedTileInScramble = {
-        id : 'asdasdasd',
-        coords : [1,2]
-    };
+    var _lastHoleCoordsInScramble = null;
 
     var init = function ()
     {
@@ -182,50 +178,41 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     };
 
+
+    /**
+     * find tiles adjacent to the hole RND
+     *
+     * @returns {*|jQuery|HTMLElement}
+     * @private
+     */
     var _getRandomMovableTile = function() {
         var x = _holeCoords[0];
         var y = _holeCoords[1];
 
-        /**
-         * find tiles adjecent to the hole RND
-         */
         var adjacentCoords = [];
 
-        // console.log(_lastMovedTileInScramble);
-        // console.log('['+_lastMovedTileInScramble.coords[0]+','+_lastMovedTileInScramble.coords[1]+']');
-
         if(x > 0){
-            // adjacentCoords.push([x-1,y]); // up
-
-            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x-1,y]);
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x-1,y]); // up
         }
+
         if(y > 0){
-            // adjacentCoords.push([x,y-1]); // left
-
-            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x,y-1]);
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x,y-1]); // left
         }
+
         if(y < _gridSize-1) {
-            // adjacentCoords.push([x, y + 1]); // right
-
-            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x,y+1]);
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x,y+1]); // right
         }
-        if(x < _gridSize-1){
-            // adjacentCoords.push([x+1,y]); // bottom
 
-            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x+1,y]);
+        if(x < _gridSize-1){
+            _pushCoordsIfItsNotTheLastScrambled(adjacentCoords, [x+1,y]); // bottom
         }
 
         var idx = Math.floor(Math.random() * adjacentCoords.length);
 
-        // console.log(adjacentCoords, adjacentCoords[idx]);
-
         var id = _getTileIdFromMapByCoords(adjacentCoords[idx]);
-        // console.log(id);
         var winner = $('#' + id );
 
-        _lastMovedTileInScramble.id = id;
-        // _lastMovedTileInScramble.coords = adjacentCoords[idx];
-        _lastMovedTileInScramble.coords = _holeCoords;
+        _lastHoleCoordsInScramble = _holeCoords;
 
         // console.log(winner.children('div').children('span').text());
         // _switchTileWithTheHole(winner);
@@ -249,20 +236,19 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
     };
 
+    /**
+     * Check a possible sramble coords array whether it was the last position of the hole or not.
+     * We should not include the last position in the possible tiles to prevent to seesaw effect.
+     *
+     * @param pushTo array of coords arrays
+     * @param pushThis array of coords
+     * @private
+     */
     var _pushCoordsIfItsNotTheLastScrambled = function(pushTo, pushThis) {
-
-        // console.log(_lastMovedTileInScramble);
-
-        if( _lastMovedTileInScramble !== null &&
-            pushThis[0] == _lastMovedTileInScramble.coords[0] &&
-            pushThis[1] == _lastMovedTileInScramble.coords[1]){
-
-            // console.log('this should not be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
-
+        if( _lastHoleCoordsInScramble !== null &&
+            pushThis[0] == _lastHoleCoordsInScramble[0] &&
+            pushThis[1] == _lastHoleCoordsInScramble[1]){
         }else{
-
-            // console.log('this will be included: ' + '['+pushThis[0]+','+pushThis[1]+']');
-
             pushTo.push(pushThis);
         }
     };
@@ -296,7 +282,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         console.log(_tileMap);
     };
     var getLastMoved = function() {
-        console.log(_lastMovedTileInScramble);
+        console.log(_lastHoleCoordsInScramble);
     };
 
     return {
