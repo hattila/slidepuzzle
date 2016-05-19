@@ -14,6 +14,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _tileTemp = '<div id="{id}" class="tile" data-coords="[{i},{j}]"><div class="inner"><span>{content}</span></div></div>';
 
     var _tileMap = [];
+    var _sampleTileMap = [];
 
 
     var _SCRAMBLE_COUNT = 100;
@@ -68,6 +69,9 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
                 _setTileSizes(ele, [i,j]);
             }
         }
+
+        _sampleTileMap = _tileMap;
+
     };
 
     /**
@@ -155,7 +159,9 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         return false;
     };
 
-    var _switchTileWithTheHole = function (ele) {
+    var _switchTileWithTheHole = function (ele, movedByScrambling) {
+        var movedByScrambling = movedByScrambling != undefined ? movedByScrambling : false;
+
         var coords = $(ele).data('coords');
         var tmp = _holeCoords;
 
@@ -168,13 +174,17 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         _setTilePosition($('#'+$(ele).attr('id')));
         _setTilePosition($('#hole'));
 
-        $.publish('/tile/moves');
+        if(!movedByScrambling){
+            $.publish('/tile/moves', ele);
+        }
 
         if(_refreshTileMapElementById($(ele).attr('id'), coords)){
             // console.log('refresh completed');
         }else{
             // console.log('refresh failed');
         }
+
+        _checkIfTileIsInTheCorrectPlace(ele)
 
     };
 
@@ -225,7 +235,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         var tc = 0;
         var t = setInterval(function(){
-            _switchTileWithTheHole(_getRandomMovableTile());
+            _switchTileWithTheHole(_getRandomMovableTile(), true); // true says it's moved by scrambling
             tc++;
             if(tc == _SCRAMBLE_COUNT){
                 clearInterval(t);
@@ -286,13 +296,25 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     };
 
 
-        /**
-         * Win conditions
-         * - every tile in the correct place?
-         * 
-         * 
-         * 
-         */
+    /**
+     * Win conditions
+     * - every tile in the correct place?
+     *
+     * A, tile map is exactly the same as in the beginning.
+     *  - check after every move? player move.
+     *  - Don't check when scrambling
+     *
+     * B, Calculate the completed image by the coords and placement of the tiles?
+     *  - dafuq
+     */
+
+    /**
+     * Compare the given Tiles coords to the one stored in the sample
+     */
+    var _checkIfTileIsInTheCorrectPlace = function (ele) {
+
+    };
+
 
     return {
         init: init,
