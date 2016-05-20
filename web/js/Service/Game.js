@@ -30,6 +30,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
 
         $('#scramble').click(function(){
             scramble();
+            resetGame();
         });
 
         $.subscribe('/tile/moves', function(e, ele){
@@ -242,7 +243,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     };
 
     var scramble = function () {
-        $('.tile').css({'transition': 'left 0.1s, top 0.1s, border-color 1s'});
+        $('.tile').css({'transition': 'left 0.1s, top 0.1s, border-color 0.5s'});
 
         var tc = 0;
         var t = setInterval(function(){
@@ -250,7 +251,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             tc++;
             if(tc == _SCRAMBLE_COUNT){
                 clearInterval(t);
-                $('.tile').css({'transition': 'left 0.2s, top 0.2s, border-color 1s'});
+                $('.tile').css({'transition': 'left 0.2s, top 0.2s, border-color 0.5s'});
                 Hw.Srvc.Counter.resetCounter();
             }
         },_SCRAMBLE_INTERVAL);
@@ -399,6 +400,24 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
            "border-color": 'rgba(0, 0, 0, 0)' 
         });
         $('div.puzzle-outer div.bg').css({"opacity":1});
+        setTimeout(function(){
+            $('div.tile div.inner span').css({"opacity":0});
+        },500);
+
+
+
+    };
+
+    var resetGame = function(){
+        $('div.tile').css({
+            "border-color": 'rgba(0, 0, 0, 0.4)'
+        });
+        $('div.puzzle-outer div.bg').css({"opacity":0});
+        setTimeout(function(){
+            $('div.tile div.inner span').css({"opacity":1});
+        },500);
+
+        Hw.Srvc.Counter.resetCounter();
     };
 
 
@@ -406,6 +425,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         init: init,
         scramble: scramble,
         getTileMap: getTileMap,
-        getLastMoved: getLastMoved
+        getLastMoved: getLastMoved,
+        resetGame: resetGame
     }
 })();
