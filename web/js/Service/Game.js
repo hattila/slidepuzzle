@@ -396,24 +396,37 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
      */
     var _winAnimation = function () {
         // $('div.tile').fadeOut(1000);
-        $('div.tile').css({
-           "border-color": 'rgba(0, 0, 0, 0)' 
-        });
-        $('div.puzzle-outer div.bg').css({"opacity":1});
+
+        $('div.puzzle-outer').addClass('victory');
+
         setTimeout(function(){
+            $('div.puzzle-outer div.bg').css({"opacity":1});
+
+            $('div.tile').css({
+                "border-color": 'rgba(0, 0, 0, 0)'
+            });
+        },1000);
+
+        setTimeout(function(){
+            // $('div.tile').css({"opacity":0});
             $('div.tile div.inner span').css({"opacity":0});
-        },500);
 
-
+            Materialize.toast("You won with "+ Hw.Srvc.Counter.getCounter()+" steps!", 500000);
+        },1500);
 
     };
 
     var resetGame = function(){
+
+        $('div.puzzle-outer').removeClass('victory');
+        $('div.puzzle-outer div.bg').css({"opacity":0});
+
         $('div.tile').css({
             "border-color": 'rgba(0, 0, 0, 0.4)'
         });
-        $('div.puzzle-outer div.bg').css({"opacity":0});
+
         setTimeout(function(){
+            // $('div.tile').css({"opacity":1});
             $('div.tile div.inner span').css({"opacity":1});
         },500);
 
