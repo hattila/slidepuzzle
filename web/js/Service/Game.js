@@ -35,6 +35,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         $.subscribe('/tile/moves', function(e, ele){
             if(_checkIfTileIsInTheCorrectPlace(ele) && _checkIfPuzzleIsComplete()){
                 console.log('WIN');
+                _winAnimation();
             }
         });
 
@@ -241,7 +242,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     };
 
     var scramble = function () {
-        $('.tile').css({'transition': 'left 0.1s, top 0.1s'});
+        $('.tile').css({'transition': 'left 0.1s, top 0.1s, border-color 1s'});
 
         var tc = 0;
         var t = setInterval(function(){
@@ -249,7 +250,7 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             tc++;
             if(tc == _SCRAMBLE_COUNT){
                 clearInterval(t);
-                $('.tile').css({'transition': 'left 0.2s, top 0.2s'});
+                $('.tile').css({'transition': 'left 0.2s, top 0.2s, border-color 1s'});
                 Hw.Srvc.Counter.resetCounter();
             }
         },_SCRAMBLE_INTERVAL);
@@ -387,8 +388,17 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         return true;
     };
 
+
+    /**
+     * Show the whole image
+     * @private
+     */
     var _winAnimation = function () {
-        
+        // $('div.tile').fadeOut(1000);
+        $('div.tile').css({
+           "border-color": 'rgba(0, 0, 0, 0)' 
+        });
+        $('div.puzzle-outer div.bg').css({"opacity":1});
     };
 
 
