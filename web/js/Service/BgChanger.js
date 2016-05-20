@@ -7,17 +7,17 @@ Hw.Srvc.BgChanger = Hw.Srvc.BgChanger || (function(){
     var _bg = 0;
     var _bgs = [
         {
-            name: 'Forest Patrol',
-            src: '../image/forest-patrol-flat-1600.png',
-            thmbSrc: '../image/thmb/forest-patrol-flat-400.png'
+            name: 'Mountains',
+            src: '../image/mountains_1600.jpg',
+            thmbSrc: '../image/thmb/mountains_400.jpg'
         },{
             name: 'F0rest',
             src: '../image/forest_1600.png',
             thmbSrc: '../image/thmb/forest_400.png'
         },{
-            name: 'Mountains',
-            src: '../image/mountains_1600.jpg',
-            thmbSrc: '../image/thmb/mountains_400.jpg'
+            name: 'Forest Patrol',
+            src: '../image/forest-patrol-flat-1600.png',
+            thmbSrc: '../image/thmb/forest-patrol-flat-400.png'
         },{
             name: 'DooM',
             src: '../image/doom_logo_1600.jpg',
@@ -55,6 +55,7 @@ Hw.Srvc.BgChanger = Hw.Srvc.BgChanger || (function(){
 
     var _changeTilesBackground = function (bg) {
         $('div.tile').css({"background-image": "url('"+bg+"')"});
+        $('div.puzzle-outer div.bg').css({"background-image": "url('"+bg+"')"});
     };
 
     return {

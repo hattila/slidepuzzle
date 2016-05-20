@@ -33,17 +33,8 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         });
 
         $.subscribe('/tile/moves', function(e, ele){
-            if(_checkIfTileIsInTheCorrectPlace(ele)){
-                console.log('It\s in the correct place');
-
-                if(_checkIfPuzzleIsComplete()){
-                    console.log('WIN');
-                }else{
-                    console.log('Not completed yet');
-                }
-
-            }else{
-                console.log('It\s not in the correct place');
+            if(_checkIfTileIsInTheCorrectPlace(ele) && _checkIfPuzzleIsComplete()){
+                console.log('WIN');
             }
         });
 
@@ -366,6 +357,10 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         return false;
     };
 
+    /**
+     * Compare the _tileMap against the _sampleTileMap
+     * - if they are exactly the same, it's a win
+     */
     var _checkIfPuzzleIsComplete = function () {
 
         if(_sampleTileMap.length != _tileMap.length){
@@ -380,9 +375,9 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
                 // it's all right
             }else{
 
-                console.log('First difference here: '+_sampleTileMap[i].id+' - '+_tileMap[i].id);
-                console.log('Sample : '+_sampleTileMap[i].coords[0]+' '+_sampleTileMap[i].coords[1]);
-                console.log('Tile : '+_tileMap[i].coords[0]+' '+_tileMap[i].coords[1]);
+                // console.log('First difference here: '+_sampleTileMap[i].id+' - '+_tileMap[i].id);
+                // console.log('Sample : '+_sampleTileMap[i].coords[0]+' '+_sampleTileMap[i].coords[1]);
+                // console.log('Tile : '+_tileMap[i].coords[0]+' '+_tileMap[i].coords[1]);
 
                 return false;
             }
@@ -390,6 +385,10 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         }
 
         return true;
+    };
+
+    var _winAnimation = function () {
+        
     };
 
 
