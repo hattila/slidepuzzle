@@ -16,11 +16,12 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _tileMap = [];
     var _sampleTileMap = [];
 
+    var _lastHoleCoordsInScramble = null;
+    var _blocked = true;
 
     var _SCRAMBLE_COUNT = 100;
     var _SCRAMBLE_INTERVAL = 25; // speed of movement in ms, lower is faster
 
-    var _lastHoleCoordsInScramble = null;
 
     var init = function ()
     {
@@ -31,6 +32,16 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         $('#scramble').click(function(){
             scramble();
             resetGame();
+        });
+
+        $('#start').click(function(){
+            _freeGameField();
+            scramble();
+            resetGame();
+        });
+
+        $('.blocker').click(function(){
+            Materialize.toast("Click Start to Start!", 4000);
         });
 
         $.subscribe('/tile/moves', function(e, ele){
@@ -144,13 +155,15 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
     var _addClickHandlersToTiles = function ()
     {
         $('div#puzzle-container').on('click', 'div.tile', function(){
-            var coords = $(this).data('coords');
+           if(!_blocked){
+               var coords = $(this).data('coords');
 
-            if(_isMovable(coords)){
-                _switchTileWithTheHole($(this));
-            } else {
-
-            }
+               if(_isMovable(coords)){
+                   _switchTileWithTheHole($(this));
+               }
+           }else{
+               Materialize.toast("Click Start to Start!", 4000);
+           }
 
         });
     };
@@ -431,6 +444,26 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
         },500);
 
         Hw.Srvc.Counter.resetCounter();
+    };
+
+    var _freeGameField = function(){
+        _blocked = false;
+
+        $('#start').fadeOut(200);
+        $('.blocker').css({
+            'width': '0',
+            'height': '0'
+        });
+
+    };
+    var _freezeGameField = function(){
+        _blocked = true;
+
+        $('#start').fadeIn(200);
+        $('.blocker').css({
+            'width': '100%',
+            'height': '100%'
+        });
     };
 
 
