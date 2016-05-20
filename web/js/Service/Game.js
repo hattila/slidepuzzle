@@ -40,7 +40,12 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             resetGame();
         });
 
-        $('.blocker').click(function(){
+        $('#grid-selection a.btn').click(function(){
+            _setGridSize($(this).data('size'));
+        });
+
+
+        $('.blocker').click(function(){ // totally unnecessary ...
             Materialize.toast("Click Start to Start!", 4000);
         });
 
@@ -424,7 +429,10 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             // $('div.tile').css({"opacity":0});
             $('div.tile div.inner span').css({"opacity":0});
 
-            Materialize.toast("You won with "+ Hw.Srvc.Counter.getCounter()+" steps!", 500000);
+            Materialize.toast("You won with "+ Hw.Srvc.Counter.getCounter()+" steps!", 5000);
+
+            _freezeGameField();
+
         },1500);
 
     };
@@ -465,6 +473,35 @@ Hw.Srvc.Game = Hw.Srvc.Game || (function(){
             'height': '100%'
         });
     };
+
+    /**
+     * Resetting Grid Size
+     */
+    var _setGridSize = function (size) {
+
+        // VALIDATE
+        if(!Number.isInteger(size)){
+            throw new Error(size + " is not a number");
+        }else if(size < 3 || size > 8){
+            throw new Error(size + " is out of bounds");
+        }
+
+        _gridSize = size;
+        _spacesCount = Math.pow(_gridSize,2);
+        _tilesCount = _spacesCount-1;
+        _holeCoords = [0, 0];
+        _lastHoleCoordsInScramble = null;
+        _tileMap = [];
+        _sampleTileMap = [];
+
+        $('#puzzle-container').html('');
+
+        _createField();
+
+        _freezeGameField();
+
+    };
+
 
 
     return {

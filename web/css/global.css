@@ -65,6 +65,15 @@ div#available-bgs div.bg:hover {
 }
 
 /**
+ * Grid Size
+ */
+div#grid-selection {}
+div#grid-selection a.btn{
+	margin-bottom: 4px;
+}
+
+
+/**
  * Score
  */
 div#scores {
