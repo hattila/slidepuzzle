@@ -28,8 +28,77 @@ div#page-container div.right-pane h1.main-title{
 	font-size: 28px;
 	text-align: center;
 }
+div#page-container div.right-pane h2.sub-title{
+	font-size: 20px;
+	text-align: left;
+	margin: 12px 0 12px 0;
+}
+
+div#page-container div.right-pane div.row.border-top {
+	border-top: 1px solid #ddd;
+	padding: 0 0 16px 0;
+}
+
+/**
+ * BgChanger
+ */
+div#available-bgs {
+	margin: 0 -3px 0 -3px;
+}
+div#available-bgs div.bg {
+	width: 110px;
+	height: 62px;
+	margin: 0 3px 6px 3px;
+	line-height: 0;
+	opacity: 1;
+
+	transition: opacity 0.2s;
+}
+div#available-bgs div.bg img {
+	width: 100%;
+	height: 100%;
+}
+
+div#available-bgs div.bg:hover {
+	cursor: pointer;
+	opacity: 0.8;
+}
+
+/**
+ * Grid Size
+ */
+div#grid-selection {}
+div#grid-selection a.btn{
+	margin-bottom: 4px;
+}
 
 
+/**
+ * Score
+ */
+div#scores {
+	font-size: 1.2em;
+	line-height: 1.3;
+}
+div#scores div.elem {
+	width: 100%;
+}
+div#scores div.elem span {}
+
+div#scores div.elem div.num {
+	margin: 0 6px 0 0;
+}
+div#scores div.elem div.name {
+	width: 150px;
+}
+div#scores div.elem div.moves {
+	width: 54px;
+}
+
+
+/**
+ * Counter
+ */
 div.moves-counter-outer {
 	margin: 100px 0 0 0;
 	text-align: center;
@@ -41,26 +110,107 @@ div.moves-counter-outer p {
 div.moves-counter-outer p span#moves-counter {}
 
 
+/**
+ * Puzzle area
+ */
 div.puzzle-outer {
+	position: relative;
 	width: 100%;
 	max-width: 800px;
 	height: 450px;
 	padding: 0px;
 	box-sizing: content-box;
 	margin: 50px auto 0 auto;
+
+	background-color: #bbb;
+	border-radius: 2px;
+	box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
+	border: 0px solid #999;
+	border-radius: 2px;
+
 }
+div.puzzle-outer div.bg {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 2px;
+
+	opacity: 0;
+	background-image: url('../image/mountains_1600.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 798px 448px;
+
+	transition: opacity 1s;
+}
+div.puzzle-outer div.victory-ripple {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	background-color: rgba(102,187,106,1); /* #66bb6a */
+
+	opacity: 1;
+	transform: scale(1);
+
+	transition: background-color 0.2s, transform 0.2s;
+}
+@-webkit-keyframes RippleOut {
+	from { -webkit-transform: scale(1); transform: scale(1); background-color: rgba(102,187,106,1);}
+	to { -webkit-transform: scale(1.2); transform: scale(1.2); background-color: rgba(102,187,106,0); }
+}
+@keyframes RippleOut {
+	from { -webkit-transform: scale(1); transform: scale(1); background-color: rgba(102,187,106,1); }
+	to { -webkit-transform: scale(1.2); transform: scale(1.2); background-color: rgba(102,187,106,0); }
+}
+
+div.puzzle-outer.victory div.victory-ripple{
+	-webkit-animation-name: RippleOut;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count: 1;
+
+	animation-name: RippleOut;
+	animation-duration: 0.6s;
+	animation-iteration-count: 1;
+}
+
+div.puzzle-outer div.blocker {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+
 div#puzzle-container {
+	position: relative;
 	width: inherit;
 	height: inherit;
 	margin: 0px auto 0 auto;
 	padding: 0px;
-	background-color: #bbb;
 	border-radius: 2px;
-	box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);
-	position: relative;
-	box-sizing: content-box;
-	border: 0px solid #999;
+	/*background-color: #bbb;*/
+	/*box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.1);*/
+	/*box-sizing: content-box;*/
+	/*border: 0px solid #999;*/
 }
+
+
+
 div#puzzle-container div.space {
 	width: 33.33333%;
 	margin: auto;
@@ -77,18 +227,21 @@ div#puzzle-container div.tile {
 	margin: auto;
 	box-sizing: border-box;
 	padding: 0px;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	border-radius: 0px;
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0);
 	border: 1px solid rgba(0, 0, 0, 0.4);
-	transition: left 0.2s, top 0.2s;
 	/*line-height: 150px;*/
 	text-align: center;
 	font-size: 40px;
 	color: rgba(50, 50, 50, 0.6);
 	cursor: pointer;
-	background-image: url('../image/forest-patrol-flat-1600.png');
+	background-image: url('../image/mountains_1600.jpg');
+	background-repeat: no-repeat;
 	background-size: 800px 450px;
+
+	transition: left 0.2s, top 0.2s, border-color 0.5s;
+
 }
 div#puzzle-container div.tile.hole {}
 
@@ -102,12 +255,39 @@ div#puzzle-container div.tile div.inner span {
 	height: auto;
 	width: 100%;
 	vertical-align: middle;
+	opacity: 1;
+	transition: opacity 0.5s;
 }
 
 div#puzzle-container div#hole {
 	background-color: rgba(0,0,0,0.0);
-	background-image: none	;
+	background-image: none!important;
 	box-shadow: none;
 	border: none;
 	cursor: initial;
+}
+
+/**
+ * Start button
+ */
+div.start-container {
+	margin: 50px 0 0 0;
+}
+div.start-container a#start{
+	width: 40%;
+	min-width: 200px;
+	margin: 0 auto;
+}
+
+
+/**
+ * Materialize Overwrites
+ */
+#toast-container {
+	top: initial;
+	right: initial;
+	left: 5%;
+	bottom: 7%;
+	max-width: 90%;
+
 }

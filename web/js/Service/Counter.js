@@ -25,6 +25,10 @@ Hw.Srvc.Counter = Hw.Srvc.Counter || (function(){
         $.publish('/counter/changes');
     };
 
+    var getCounter = function () {
+        return _counter;
+    };
+
     var _refreshCounter = function () {
         $('#moves-counter').html(_counter);
     };
@@ -35,6 +39,7 @@ Hw.Srvc.Counter = Hw.Srvc.Counter || (function(){
 
     return {
         init: init,
+        getCounter: getCounter,
         resetCounter: resetCounter
         
     }

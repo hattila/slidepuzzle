@@ -23,11 +23,20 @@
 		</div>
 
 		<div class="puzzle-outer">
+			<div class="victory-ripple green lighten-1"></div>
+			<div class="bg"></div>
+
 			<div id="puzzle-container">
 
 				<!--<div class="space float-left"></div>-->
 
 			</div>
+
+			<div class="blocker"></div>
+		</div>
+
+		<div class="start-container align-center">
+			<a href="#" id="start" class="btn blue white-text waves-effect">Start!</a>
 		</div>
 
 	</div>
@@ -47,6 +56,83 @@
 				<a href="#" id="scramble" class="btn orange white-text waves-effect display-block">Shuffle / Reset</a>
 			</div>
 		</div>
+
+		<div class="row border-top">
+			<div class="col s12">
+				<h2 class="sub-title">
+					Set grid size
+				</h2>
+				<div id="grid-selection">
+					<a href="#" data-size="3" class="btn green white-text waves-effect">3</a>
+					<a href="#" data-size="4" class="btn light-green white-text waves-effect">4</a>
+					<a href="#" data-size="5" class="btn lime white-text waves-effect">5</a>
+					<a href="#" data-size="6" class="btn amber white-text waves-effect">6</a>
+					<a href="#" data-size="7" class="btn orange white-text waves-effect">7</a>
+					<a href="#" data-size="8" class="btn red white-text waves-effect">8</a>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row border-top">
+			<div class="col s12">
+				<h2 class="sub-title">
+					Score
+				</h2>
+				<div id="scores">
+
+					<div class="elem">
+						<div class="num float-left align-right">
+							<span>1.</span>
+						</div>
+						<div class="name float-left">
+							<span>pr0</span>
+						</div>
+						<div class="moves float-left align-right">
+							<span>98</span>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+
+					<div class="elem">
+						<div class="num float-left align-right">
+							<span>2.</span>
+						</div>
+						<div class="name float-left">
+							<span>s3m1 pr0</span>
+						</div>
+						<div class="moves float-left align-right">
+							<span>176</span>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+
+					<div class="elem">
+						<div class="num float-left align-right">
+							<span>3.</span>
+						</div>
+						<div class="name float-left">
+							<span>n00b</span>
+						</div>
+						<div class="moves float-left align-right">
+							<span>235</span>
+						</div>
+						<div class="clear-both"></div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row border-top">
+			<div class="col s12">
+				<h2 class="sub-title">
+					Select background
+				</h2>
+				<div id="available-bgs"></div>
+			</div>
+		</div>
+
 	</div>
 
 
@@ -61,5 +147,6 @@
 	<script src="/js/Controller/AppController.js" type="text/javascript"></script>
 	<script src="/js/Service/Game.js" type="text/javascript"></script>
 	<script src="/js/Service/Counter.js" type="text/javascript"></script>
+	<script src="/js/Service/BgChanger.js" type="text/javascript"></script>
 </body>
 </html>
