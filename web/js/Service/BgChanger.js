@@ -8,20 +8,20 @@ Hw.Srvc.BgChanger = Hw.Srvc.BgChanger || (function(){
     var _bgs = [
         {
             name: 'Mountains',
-            src: '../image/mountains_1600.jpg',
-            thmbSrc: '../image/thmb/mountains_400.jpg'
+            src: 'image/mountains_1600.jpg',
+            thmbSrc: 'image/thmb/mountains_400.jpg'
         },{
             name: 'F0rest',
-            src: '../image/forest_1600.png',
-            thmbSrc: '../image/thmb/forest_400.png'
+            src: 'image/forest_1600.png',
+            thmbSrc: 'image/thmb/forest_400.png'
         },{
             name: 'Forest Patrol',
-            src: '../image/forest-patrol-flat-1600.png',
-            thmbSrc: '../image/thmb/forest-patrol-flat-400.png'
+            src: 'image/forest-patrol-flat-1600.png',
+            thmbSrc: 'image/thmb/forest-patrol-flat-400.png'
         },{
             name: 'DooM',
-            src: '../image/doom_logo_1600.jpg',
-            thmbSrc: '../image/thmb/doom_logo_400.jpg'
+            src: 'image/doom_logo_1600.jpg',
+            thmbSrc: 'image/thmb/doom_logo_400.jpg'
         }
     ];
 
